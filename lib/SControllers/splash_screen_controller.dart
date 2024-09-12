@@ -1,12 +1,20 @@
 import 'dart:async';
+import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-class SplashScreenController extends GetxController{
+class SplashScreenController extends GetxController  {
+  late AnimationController animationController;
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
-    Timer(Duration(seconds: 3), () => Get.toNamed("/login"),);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    Timer(const Duration(milliseconds: 4300), () => Get.offNamed("/login"),);
   }
+  var animation=["assets/lotti/splash0.json"];
+  // int random=Random().nextInt(1);
+  int random=0;
+  bool textAnima=false;
 }
