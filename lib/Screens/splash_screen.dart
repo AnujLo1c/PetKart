@@ -12,6 +12,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SplashScreenController splashScreenController=Get.put(SplashScreenController());
     return Scaffold(
+
       body: SizedBox(
         height: Get.size.height,
         width: Get.size.width,

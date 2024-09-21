@@ -22,8 +22,7 @@ class EmailPassLoginAl {
       if (!_auth.currentUser!.emailVerified) {
         Get.toNamed("/emailverify");
       }
-      print(
-          "!_auth.currentUser!.emailVerified ${!_auth.currentUser!.emailVerified}");
+      // print("!_auth.currentUser!.emailVerified ${!_auth.currentUser!.emailVerified}");
       showSuccessSnackbar("Login successful.");
 
       return true;
@@ -35,7 +34,7 @@ class EmailPassLoginAl {
         showErrorSnackbar(e.message.toString());
       }
       return false;
-      // Navigator.pop(context);
+
     } catch (e) {
       showErrorSnackbar(e.toString());
       return false;
@@ -45,22 +44,18 @@ class EmailPassLoginAl {
   signUpAL( String email, String password) async {
     try {
       if (!validateEmailAL(email)) {
-        // showSnackbarAL("Email badly formatted.", context);
         showErrorSnackbar("Email badly formatted.");
         return false;
       }
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       showSuccessSnackbar("Account created successful.");
-      // showSnackbarAL("Account created successful.", context);
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == "email-already-in-use") {
-        // showSnackbarAL("Account with this email Already exists", context);
         showErrorSnackbar("Account with this email Already exists.");
         Get.toNamed("/emailverify", arguments: email);
       } else if (e.code == 'weak-password') {
-        // showSnackbarAL("Password Provided is too Weak", context);
         showErrorSnackbar("Password Provided is too Weak");
       } else {
         showErrorSnackbar(e.message.toString());

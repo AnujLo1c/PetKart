@@ -10,7 +10,6 @@ class VerifyEmailController extends GetxController {
   FirebaseAuth fa = FirebaseAuth.instance;
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     isEmailVerified.value = false;
     fa.currentUser?.sendEmailVerification();
@@ -25,7 +24,7 @@ class VerifyEmailController extends GetxController {
   }
 
   checkEmailVerified() async {
-    // Check if currentUser is not null before reloading
+
     if (fa.currentUser != null) {
       await fa.currentUser!.reload();
 
@@ -36,7 +35,7 @@ class VerifyEmailController extends GetxController {
             snackPosition: SnackPosition.BOTTOM);
 
         Get.until((route) => route.settings.name == "/login");
-        // Get.offNamed("/login");
+
         timer?.cancel();
       }
     }

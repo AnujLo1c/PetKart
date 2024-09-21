@@ -12,6 +12,7 @@ import '../../Firebase/FirebaseStorage/cloud_storage.dart';
 class SignUpController extends GetxController {
   final nicknameController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>(debugLabel: "signup");
@@ -22,12 +23,13 @@ class SignUpController extends GetxController {
 
 @override
   void onClose() {
-    // TODO: implement onClose
+
     super.onClose();
     nicknameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    phoneController.dispose();
   }
   Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
@@ -48,30 +50,22 @@ class SignUpController extends GetxController {
 
   void signUpUser() async {
     if (formKey.currentState?.validate() ?? false) {
-      // Handle sign up logic here
-      print('Nickname: ${nicknameController.text}');
-      print('Email: ${emailController.text}');
-      print('Password: ${passwordController.text}');
+
       if (await EmailPassLoginAl()
           .signUpAL( emailController.text, passwordController.text)) {
-        print("here");
+
         String profileUrl = await CloudStorage()
             .uploadImageAL(image.value, emailController.text);
         if (profileUrl == "" || profileUrl.isEmpty) {
-          print("here1");
           await EmailPassLoginAl().deleteUser();
           print("user failed to upload userproffile");
         } else {
-          print("here2");
-
           Customer signupUser=Customer(customerName: nicknameController.text, email: emailController.text, profileUrl: profileUrl);
           bool userDataUploadStatus =
               await FirestoreFirebaseAL().uploadUserDataAL(signupUser);
           if (userDataUploadStatus) {
-            print("here3");
             Get.toNamed("/emailverify");
           } else {
-            print("here4");
             EmailPassLoginAl().deleteUser();
             CloudStorage().deleteProfile(emailController.text);
             FirestoreFirebaseAL().deleteUserDataAl(emailController.text);

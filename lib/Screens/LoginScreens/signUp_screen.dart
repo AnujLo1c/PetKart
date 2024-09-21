@@ -1,8 +1,12 @@
-
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:image_picker/image_picker.dart';
+import 'package:pet_kart/SControllers/theme_controller.dart';
+
+import '../../MyWidgets/custom_obx_textformfield.dart';
+import '../../MyWidgets/custom_textformfield.dart';
 import '../../SControllers/LoginScreenControllers/sign_up_controller.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -13,109 +17,99 @@ class SignupScreen extends StatelessWidget {
     final SignUpController controller = Get.put(SignUpController());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign Up'),
-      ),
+      // backgroundColor: Colors.black,
+      appBar: AppBar(title: const Text("Sign Up")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: controller.formKey,
-          child: ListView(
-            children: [
-              GestureDetector(
-                onTap: () => _showImageSourceActionSheet(context, controller),
-                child: Obx(() => CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.grey[300],
-                      backgroundImage: controller.image.value != null
-                          ? FileImage(controller.image.value!)
-                          : null,
-                      child: controller.image.value == null
-                          ? const Icon(Icons.add_a_photo, size: 50)
-                          : null,
-                    )),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: controller.nicknameController,
-                decoration: const InputDecoration(labelText: 'Nickname'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your nickname';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: controller.emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              Obx(() => TextFormField(
-                    controller: controller.passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          controller.obscurePassword.value
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                        onPressed: controller.toggleObscurePassword,
+          // key: controller.formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () => _showImageSourceActionSheet(context, controller),
+                  child: Obx(() => CircleAvatar(
+                        radius: 70,
+                        backgroundColor: Get.theme.colorScheme.primary,
+                        backgroundImage: controller.image.value != null
+                            ? FileImage(controller.image.value!)
+                            : null,
+                        child: controller.image.value == null
+                            ? const Icon(Icons.person, size: 70)
+                            : null,
+                      )),
+                ),
+                const Gap(10),
+                const Text(
+                  "Select Profile",
+                  style: TextStyle(fontSize: 14),
+                ),
+                const Gap(20),
+                Form(
+                  key: controller.formKey,
+                  child: Column(
+                    children: [
+                      //TODO:Fix the validator message issue . Set up snackbar or this.
+                      CustomTextFormField(
+                        controller: controller.nicknameController,
+                        labelText: "Name",
                       ),
-                    ),
-                    obscureText: controller.obscurePassword.value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
-                  )),
-              const SizedBox(height: 16),
-              Obx(() => TextFormField(
-                    controller: controller.confirmPasswordController,
-                    decoration: InputDecoration(
-                      labelText: 'Confirm Password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          controller.obscureConfirmPassword.value
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                        onPressed: controller.toggleObscureConfirmPassword,
+                      const Gap(10),
+                      CustomTextFormField(
+                        controller: controller.emailController,
+                        labelText: "Email",
+                        textInputType: TextInputType.emailAddress,
                       ),
-                    ),
-                    obscureText: controller.obscureConfirmPassword.value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      if (value != controller.passwordController.text) {
-                        return 'Passwords do not match';
-                      }
-                      return null;
-                    },
-                  )),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: ()  {
-                 controller.signUpUser();
-                },
-                child: const Text('Sign Up'),
-              ),
-            ],
+                      const Gap(10),
+                      CustomTextFormField(
+                          controller: controller.phoneController,
+                          labelText: "Phone no."),
+
+                      const Gap(10),
+                      CustomObxTextFormField(
+                        controller: controller,
+                        textEditingController: controller.passwordController,
+                        obscureText: controller.obscurePassword,
+                        toggleObscureCall: controller.toggleObscurePassword,
+                        labelText: "Password",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      ),
+                      const Gap(10),
+                      CustomObxTextFormField(
+                        textEditingController:
+                            controller.confirmPasswordController,
+                        controller: controller,
+                        obscureText: controller.obscureConfirmPassword,
+                        toggleObscureCall:
+                            controller.toggleObscureConfirmPassword,
+                        labelText: "Confirm Password",
+                      ),
+                      const Gap(10),
+                    ],
+                  ),
+                ),
+                const Gap(25),
+                ElevatedButton(
+                  onPressed: () {
+                    controller.signUpUser();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size(Get.width - 60, 60)),
+                  child: const Text('Sign Up'),
+                ),
+                // TextFormField(
+                //   decoration: InputDecoration(
+                //     label: Text("help")
+                //   ),
+                // )
+              ],
+            ),
           ),
         ),
       ),
