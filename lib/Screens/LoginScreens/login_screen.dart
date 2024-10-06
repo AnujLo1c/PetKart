@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                                loginController.clearText();
                                Get.toNamed("/forgetpass");
                              },
-                                 child: const Text("Forget Password?",style: TextStyle(fontSize: 14),)
+                                 child: const Text("Forgot Password?",style: TextStyle(fontSize: 14),)
                              ),
                            )
                          ],

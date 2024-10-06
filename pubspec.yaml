@@ -51,6 +51,12 @@ dependencies:
   cached_network_image: ^3.4.1
   rive: ^0.13.13
   curved_labeled_navigation_bar: ^2.0.2
+  carousel_slider: ^5.0.0
+  flutter_native_splash: ^2.4.1
+  share_plus: ^10.0.2
+  galleryimage: ^2.0.1
+  flutter_image_slideshow: ^0.1.6
+
 
 
 dev_dependencies:

@@ -41,16 +41,24 @@ class ProfilePage extends StatelessWidget {
                   Column(
                     children: [
                       profileTile("Booking Status",
-                              () {},
+                              () {
+                        Get.toNamed("/booking_status");
+                              },
                           Icons.bookmark_add_outlined),
-                      profileTile("Favourite",
-                              () {},
+                      profileTile("History",
+                              () {
+                        Get.toNamed("/history");
+                              },
                           Icons.history),
                       profileTile("Help",
-                              () {},
+                              () {
+                        Get.toNamed("/help");
+                              },
                           Icons.help_outline),
                       profileTile("Settings",
-                              () {},
+                              () {
+                        Get.toNamed("/settings");
+                              },
                           Icons.settings),
                       profileTile("Log Out", () {
                         GoogleSignInAL().signOutGoogle();

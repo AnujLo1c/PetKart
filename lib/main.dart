@@ -5,6 +5,10 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:pet_kart/SControllers/splash_screen_controller.dart';
 import 'package:pet_kart/SControllers/theme_controller.dart';
 import 'package:pet_kart/Screens/Adoption/adoption_page.dart';
+import 'package:pet_kart/Screens/Adoption/pet_adoption_chat_home.dart';
+import 'package:pet_kart/Screens/Adoption/pet_adoption_chat_room_screen.dart';
+import 'package:pet_kart/Screens/Adoption/pet_adoption_details_screen.dart';
+import 'package:pet_kart/Screens/Adoption/pet_rehome_screen.dart';
 import 'package:pet_kart/Screens/AppIntro/intro_screen.dart';
 import 'package:pet_kart/Screens/AppIntro/welcome_screen.dart';
 import 'package:pet_kart/Screens/BottomNav/bottom_nav_screen.dart';
@@ -83,9 +87,14 @@ class MyApp extends StatelessWidget {
 
           //adoption
           GetPage(name: "/adopt", page: ()=>const AdoptionPage()),//bottom Navigation Page
+          GetPage(name: "/adopt_pet_details", page: ()=>const PetAdoptionDetailsScreen()),
+          GetPage(name: "/adopt_rehome", page: ()=>const PetRehomeScreen()),
+          GetPage(name: "/adopt_chat_home", page: ()=>const PetAdoptionChatHome()),
+          GetPage(name: "/adopt_chat_room", page: ()=>const PetAdoptionChatRoomScreen()),
+
         ],
         // initialRoute: "/splash",
-        initialRoute: "/welcome",
+        initialRoute: "/home",
         unknownRoute: GetPage(name: "/login", page: () => const SignupScreen()),//bottom Navigation Page
       ),
     );

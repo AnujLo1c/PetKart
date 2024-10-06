@@ -37,7 +37,7 @@ repeatForever: false,
                 totalRepeatCount: 1,
                 animatedTexts: [
                   FadeAnimatedText(
-                  "PETCART",
+                  "PETKART",
                   textStyle: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
