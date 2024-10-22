@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_kart/SControllers/BottomNavController/bottom_nav_controller.dart';
+import 'package:pet_kart/Utils/themes.dart';
 
 
 class ThemeController extends GetxController {
-  var isDarkMode = true.obs;
 
-  ThemeMode get themeMode => isDarkMode.value ? ThemeMode.dark : ThemeMode.light;
-
-  void toggleTheme() {
-    isDarkMode.value = !isDarkMode.value;
-    Get.changeThemeMode(themeMode);
-  }
+  Rx<ThemeMode> themeMode=ThemeMode.system.obs;
   @override
   void onInit() {
     super.onInit();
-    isDarkMode.value=ThemeMode.system==ThemeMode.dark;
+    //TODO//set thememode to system
+    themeMode.value=ThemeMode.light;
   }
+
+  void toggleTheme() {
+    themeMode.value = themeMode.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    Get.changeThemeMode(themeMode.value);
+    print('Theme changed to: ${themeMode.value}');
+    // Get.forceAppUpdate();
+    // Get.reload<BottomNavController>();
+  }
+
+
+  ThemeData get lightTheme => MyAppTheme.lightTheme;
+  ThemeData get darkTheme => MyAppTheme.darkTheme;
 }

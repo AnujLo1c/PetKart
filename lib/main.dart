@@ -22,9 +22,6 @@ import 'package:pet_kart/Screens/LoginScreens/signUp_screen.dart';
 import 'package:pet_kart/Screens/Profile/history_screen.dart';
 import 'package:pet_kart/Screens/Profile/profile_page.dart';
 import 'package:pet_kart/Screens/Profile/settings_screen.dart';
-// import 'package:pet_kart/Screens/entry_screen.dart';
-import 'package:pet_kart/Utils/themes.dart';
-
 import 'Screens/LoginScreens/singUp_screenGoogle.dart';
 import 'Screens/Profile/booking_status_screen.dart';
 import 'Screens/Profile/help_screen.dart';
@@ -47,9 +44,9 @@ class MyApp extends StatelessWidget {
       ()=> GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'PetKart',
-        theme: MyAppTheme.lightTheme,
-        darkTheme: MyAppTheme.darkTheme,
-        themeMode: themeController.themeMode,
+        theme: themeController.lightTheme,
+        darkTheme: themeController.darkTheme,
+        themeMode: themeController.themeMode.value,
         getPages: [
           //login
           GetPage(name: "/splash", page: () => const SplashScreen()),
@@ -58,9 +55,6 @@ class MyApp extends StatelessWidget {
           GetPage(name: "/emailverify", page: () => const EmailVerificationScreen()),
           GetPage(name: "/signup", page: () => const SignupScreen()),
           GetPage(name: "/googlesignup", page: () => const SingupScreengoogle()),
-
-          //EntryPage
-          // GetPage(name: "/entrySet", page: () => const EntryScreen()),
 
           //IntroScreen
           GetPage(name: "/intro", page: () => const IntroScreen()),
@@ -93,8 +87,8 @@ class MyApp extends StatelessWidget {
           GetPage(name: "/adopt_chat_room", page: ()=>const PetAdoptionChatRoomScreen()),
 
         ],
-        // initialRoute: "/splash",
-        initialRoute: "/home",
+        initialRoute: "/splash",
+        // initialRoute: "/home",
         unknownRoute: GetPage(name: "/login", page: () => const SignupScreen()),//bottom Navigation Page
       ),
     );

@@ -8,66 +8,70 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Gap(20),
-                  Center(
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        fit: BoxFit.fill,
-                        height: 150,
-                        width: 150,
-                        imageUrl: "",
-                        placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => CircleAvatar(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Get.theme.colorScheme.primary,
-                          radius: 100,
-                          child: const Icon(
-                            Icons.person,
-                            size: 90,
+    return SimpleBuilder(
+
+      builder: (p0) => SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Gap(20),
+                    Center(
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          fit: BoxFit.fill,
+                          height: 150,
+                          width: 150,
+                          imageUrl: "",
+                          placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => CircleAvatar(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Get.theme.colorScheme.primary,
+                            radius: 100,
+                            child: const Icon(
+                              Icons.person,
+                              size: 90,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const Gap(10),
-                  Text("Anuj", style: const TextStyle(fontSize: 24)),
-                  const Gap(20),
-                  Column(
-                    children: [
-                      profileTile("Booking Status",
-                              () {
-                        Get.toNamed("/booking_status");
-                              },
-                          Icons.bookmark_add_outlined),
-                      profileTile("History",
-                              () {
-                        Get.toNamed("/history");
-                              },
-                          Icons.history),
-                      profileTile("Help",
-                              () {
-                        Get.toNamed("/help");
-                              },
-                          Icons.help_outline),
-                      profileTile("Settings",
-                              () {
-                        Get.toNamed("/settings");
-                              },
-                          Icons.settings),
-                      profileTile("Log Out", () {
-                        GoogleSignInAL().signOutGoogle();
-                      }, Icons.logout),
-                    ],
-                  ),
-                ],
-              ),
+                    // Container(color: Get.theme.colorScheme.primary,height: 100,width: 100,),
+                    const Gap(10),
+                    Text("Anuj", style: const TextStyle(fontSize: 24)),
+                    const Gap(20),
+                    Column(
+                      children: [
+                        profileTile("Booking Status",
+                                () {
+                          Get.toNamed("/booking_status");
+                                },
+                            Icons.bookmark_add_outlined),
+                        profileTile("History",
+                                () {
+                          Get.toNamed("/history");
+                                },
+                            Icons.history),
+                        profileTile("Help",
+                                () {
+                          Get.toNamed("/help");
+                                },
+                            Icons.help_outline),
+                        profileTile("Settings",
+                                () {
+                          Get.offNamed("/settings");
+                                },
+                            Icons.settings),
+                        profileTile("Log Out", () {
+                          GoogleSignInAL().signOutGoogle();
+                        }, Icons.logout),
+                      ],
+                    ),
+                  ],
+                ),
 
+      ),
     );
   }
   Widget profileTile(String text, dynamic onTap, IconData icon) {
@@ -85,8 +89,7 @@ class ProfilePage extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                  color: Get.theme.colorScheme.shadow
-                  ,
+                  color: Get.theme.colorScheme.shadow,
                   blurRadius: 5,
                   spreadRadius: 3),
             ]),

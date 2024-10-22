@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:pet_kart/SControllers/BottomNavController/bottom_nav_controller.dart';
 import 'package:pet_kart/SControllers/theme_controller.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,8 @@ class SettingsScreenController extends GetxController {
   Rx<Artboard?> riveArtboard2 = Rx<Artboard?>(null);
   SMIInput<bool>? toggleInput;
   SMIInput<bool>? toggleInput2;
-
+bool check=true;
+// BottomNavController bottomNavController=Get.find<BottomNavController>();
   @override
   void onInit() {
     super.onInit();
@@ -32,8 +34,6 @@ class SettingsScreenController extends GetxController {
 
       riveArtboard.value = artboard;
     });
-
-
     rootBundle.load('assets/rive/dark_light_switch.riv').then((data) async {
 
       final file2 = RiveFile.import(data);
@@ -48,7 +48,9 @@ class SettingsScreenController extends GetxController {
         artboard2.addController(controller2);
 
         toggleInput2 = controller2.findInput<bool>('isDark');
-        toggleInput2?.value=themeController.isDarkMode.value;
+        // toggleInput2?.value=themeController.isDarkMode.value;
+      // themeController.toggleTheme();
+
       }
 
       riveArtboard2.value = artboard2;
@@ -64,6 +66,21 @@ class SettingsScreenController extends GetxController {
     if (toggleInput2 != null) {
       toggleInput2!.value = !(toggleInput2!.value);
       themeController.toggleTheme();
+      print('Toggled theme: ${themeController.themeMode.value}');
+ // bottomNavController.currentPage.value=3;
     }
+  }
+bool block=true;
+  void handleBackNavigation() {
+if(check&& block){
+  block=false;
+    Get.offNamed("/home");
+print("true wala");
+}
+else if(!check && block){
+  block=false;
+    Get.offNamed("/home");
+print("false wala");
+}
   }
 }

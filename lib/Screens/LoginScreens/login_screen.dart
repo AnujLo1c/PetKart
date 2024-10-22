@@ -16,6 +16,7 @@ class LoginScreen extends StatelessWidget {
    Widget build(BuildContext context) {
      LoginController loginController=Get.put(LoginController());
      return Scaffold(
+
          appBar:  AppBar(title: const Text("Petkart")),
        body: Padding(
          padding: const EdgeInsets.all(16.0),
