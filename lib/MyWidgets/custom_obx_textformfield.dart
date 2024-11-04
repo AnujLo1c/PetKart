@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pet_kart/SControllers/LoginScreenControllers/sign_up_controller.dart';
+import 'package:pet_kart/SControllers/LoginScreenControllers/login_signup_controller.dart';
+
 
 class CustomObxTextFormField extends StatelessWidget {
   final SignUpController controller;

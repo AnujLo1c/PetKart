@@ -65,6 +65,8 @@ class ProfilePage extends StatelessWidget {
                             Icons.settings),
                         profileTile("Log Out", () {
                           GoogleSignInAL().signOutGoogle();
+                          Get.offAllNamed('/login_signup_screen');
+
                         }, Icons.logout),
                       ],
                     ),

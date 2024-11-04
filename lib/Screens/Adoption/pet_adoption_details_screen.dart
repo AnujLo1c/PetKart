@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:pet_kart/SControllers/AdoptionPageController/pet_adoption_details_screen_controller.dart';
 
@@ -9,50 +9,53 @@ class PetAdoptionDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the controller
     PetAdoptionDetailsScreenController petAdoptionDetailsScreenController =
-    Get.put(PetAdoptionDetailsScreenController());
+        Get.put(PetAdoptionDetailsScreenController());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Adopt Me"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // Handle back action
-            Get.back();
-          },
+        appBar: AppBar(
+          title: const Text("Adopt Me"),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(right: 16.0,left: 16,bottom: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.only(right: 16.0, left: 16, bottom: 10),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Gap(10),
             Center(
-              child: ImageSlideshow(
-                width: double.infinity,
-
-                height: 300,
-
-
-                initialPage: 0,
-                autoPlayInterval: 10000,
-
-                children: petAdoptionDetailsScreenController.cachedImageProviders.map((img) {
-                  return Image(image:img );
-                }).toList(),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-
-            // Pet Name
+                child: ImageSlideshow(
+              width: double.infinity,
+              height: 270,
+              initialPage: 0,
+              autoPlayInterval: 10000,
+              children: petAdoptionDetailsScreenController.cachedImageProviders
+                  .map((img) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image(
+                    image: img,
+                    height: 180,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              }).toList(),
+            )),
+            const Gap(16.0),
             Row(
               children: [
-                const Text(
-                  "Jax",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                RichText(
+                  text: const TextSpan(
+                      text: "Jax\n",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: "address",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.normal),
+                        )
+                      ]),
                 ),
                 const Spacer(),
                 IconButton(
@@ -63,102 +66,113 @@ class PetAdoptionDetailsScreen extends StatelessWidget {
                       Icons.heart_broken,
                       color: Colors.red,
                     )),
-                ElevatedButton(
-                    onPressed: () {
-                      // TODO: navigate to chat
-                    },
-                    child: const Text("Adopt"))
               ],
             ),
-            const SizedBox(height: 16.0),
 
-            // Facts About Me
-            const Text("Facts About Me",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10.0),
-            GridView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 3,
-              ),
+            const Gap(8.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                factTile("Breed", "Golden Retriever"),
-                factTile("Vaccinated", "Yes"),
-                factTile("Age", "Adulthood"),
-                factTile("Gender", "Male"),
-                factTile("Pet ID", "TPN15381"),
-                factTile("Neutered", "Yes"),
+                tile("Gender", "Female"),
+                tile("Age", "10 Months"),
+                tile("Breed", "xyz"),
               ],
             ),
-            const SizedBox(height: 16.0),
-
-            const Text("My Info",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10.0),
-            Wrap(
-              spacing: 8.0,
+            Divider(
+              color: Get.theme.colorScheme.primary,
+            ),
+            const Gap(5.0),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size(Get.width - 20, 50)),
+                onPressed: () {
+Get.toNamed("/adopt_form_screen");
+                },
+                child: const Text("Adopt Now")),
+            Gap(10),
+            const Text(
+              "Details",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const Row(
               children: [
-                infoChip("Spayed"),
-                infoChip("Shots Up to Date"),
-                infoChip("Good with Cats"),
-                infoChip("Good with Dogs"),
-                infoChip("Needs Loving Adopter"),
-                infoChip("Good with Kids"),
+                Gap(10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Nature"),
+                    Text("Neutered"),
+                    Text("Nature"),
+                    Text("Pet-compatible"),
+                    Text("Kids-compatible"),
+                  ],
+                ),
+                Gap(20),
+                Column(
+                  children: [
+                    Text("Yes"),
+                    Text("Yes"),
+                    Text("Yes"),
+                    Text("Yes"),
+                    Text("Yes"),
+                  ],
+                )
               ],
             ),
-            const SizedBox(height: 16.0),
-
-            // My Story
-            const Text("My Story",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10.0),
-            const Text("Relocation abroad"),
-
-            // Additional Info
-            const SizedBox(height: 16.0),
-            const Text("Additional Adoption Info",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10.0),
-            const Text("Very friendly"),
-
-            // Contact Info
-            const SizedBox(height: 16.0),
+            // Divider(color: Get.theme.colorScheme.primary,),
+            const Gap(15.0),
+            Row(
+              children: [
+                const CircleAvatar(),
+                const Gap(5),
+                Text(
+                  "Nandini Dhote",
+                  style: TextStyle(
+                      color: Get.theme.colorScheme.primary,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const Gap(10),
             Container(
-              color: Colors.blue.shade100,
-              padding: const EdgeInsets.all(16.0),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Contact Info",
-                      style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10.0),
-                  Text("Address: Noida, Uttar Pradesh"),
-                ],
-              ),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey)),
+              child: const Text(
+                  "The pet is good and well behaving. It is also well trained. "),
             ),
-          ],
-        ),
-      ),
-    );
+            const Gap(20),
+          ]),
+        ));
   }
 
-  Widget factTile(String title, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        Text(value),
-      ],
-    );
-  }
-
-  Widget infoChip(String label) {
-    return Chip(
-      label: Text(label),
-      backgroundColor: Colors.green.shade100,
-    );
+  tile(title, value) {
+    return Container(
+        padding: const EdgeInsets.all(15),
+        width: 110,
+        decoration: BoxDecoration(
+            color: const Color(0xFFE0D1D1),
+            borderRadius: BorderRadius.circular(10)),
+        child: RichText(
+          textAlign: TextAlign.center, // Center align text inside RichText
+          text: TextSpan(
+            text: title + '\n',
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            children: [
+              TextSpan(
+                text: value,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Get.theme.colorScheme.primary),
+              ),
+            ],
+          ),
+        ));
   }
 }

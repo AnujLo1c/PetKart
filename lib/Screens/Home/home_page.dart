@@ -49,30 +49,37 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      height: 163,
-                      width: 150,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Get.theme.colorScheme.primary,
-                              width: 1
-                          ),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/picture/petFood.png"),
-                            fit: BoxFit.fitWidth,)
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed("/food_acc_screen",arguments: "Food");},
+      child: Container(        height: 160,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Get.theme.colorScheme.primary,
+                                width: 1
+                            ),
+                            image: const DecorationImage(
+                              image: AssetImage("assets/picture/petFood.png"),
+                              fit: BoxFit.fill,)
+                        ),
                       ),
                     ),
-                    Container(
-                      height: 163,
-                      width: 150,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Get.theme.colorScheme.primary,
-                              width: 1
-                          ),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/picture/acessories.png"),
-                            fit: BoxFit.fill,)
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed("/food_acc_screen",arguments: "Accessories");},
+      child: Container(
+        height: 160,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Get.theme.colorScheme.primary,
+                                width: 1
+                            ),
+                            image: const DecorationImage(
+                              image: AssetImage("assets/picture/acessories.png"),
+                              fit: BoxFit.fill,)
+                        ),
                       ),
                     ),
       
@@ -99,7 +106,7 @@ class HomePage extends StatelessWidget {
     return GestureDetector(
       onTap: ()=>homePageController.navigate(idx),
       child: Container(
-        padding: EdgeInsets.only(bottom: 20),
+        padding: EdgeInsets.only(bottom: 25,right: 10),
         alignment: Alignment.bottomRight,
         height: 140,
         width: Get.width-30,
@@ -173,26 +180,29 @@ class HomePage extends StatelessWidget {
   }
 
 petContainer(String imgsrc, String text) {
-  return Container(
-    width: 100,
-    height: 100,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Get.theme.colorScheme.primary,
-            width: 1
-        )
-    ),
-    child: Column(
-      children: [
+  return GestureDetector(
+   onTap: () => Get.toNamed("/pet_buy_screen",arguments: text),
+    child: Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Get.theme.colorScheme.primary,
+              width: 1
+          )
+      ),
+      child: Column(
+        children: [
 
-        Padding(
-            padding: const EdgeInsets.all(3),
-            child: Image(image: AssetImage(imgsrc))
-        ),
-        Text(text,style: const TextStyle(
-          fontWeight: FontWeight.bold
-        ),)
-      ],
+          Padding(
+              padding: const EdgeInsets.all(3),
+              child: Image(image: AssetImage(imgsrc))
+          ),
+          Text(text,style: const TextStyle(
+            fontWeight: FontWeight.bold
+          ),)
+        ],
+      ),
     ),
   );
 }
