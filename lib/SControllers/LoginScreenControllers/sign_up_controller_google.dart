@@ -13,7 +13,7 @@ import '../persistent_data_controller.dart';
 class SignUpControllerGoogle extends GetxController{
   final nicknameController = TextEditingController();
   final phoneController = TextEditingController();
-  PersistentDataController persistentDataController=Get.put(PersistentDataController());
+  PersistentDataController persistentDataController=Get.find<PersistentDataController>();
   final formKey1 = GlobalKey<FormState>();
 
   var image = Rx<File?>(null);

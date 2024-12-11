@@ -56,14 +56,14 @@ class LoginSignupScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const Gap(15)
+              const Gap(25)
             ],
           ),
         ),
 
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 80,
+          topT: 240,
           topF: 650,
           left: 20,
           icon: Icons.pets,
@@ -74,41 +74,48 @@ class LoginSignupScreen extends StatelessWidget {
           topF: 580,
           left: 60,
           icon: Icons.emoji_emotions,
+          img: ImageIcon( size:35,AssetImage("assets/picture/bicon.png")),
+   
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 130,
+          topT: 140,
           topF: 450,
           left: 130,
           icon: Icons.person,
+          img: ImageIcon( size:35,AssetImage("assets/picture/cicon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 170,
+          topT: 190,
           topF: 470,
-          left: 70,
+          left: 85,
           icon: Icons.mood,
+          img: ImageIcon( size:35,AssetImage("assets/picture/ficon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 250,
+          topT: 40,
+          // topF: 40,
           topF: 40,
           left: 10,
           icon: Icons.pets,
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 280,
+          topT: 240,
           topF: 380,
           left: 90,
           icon: Icons.emoji_emotions,
+          img: ImageIcon( size:35,AssetImage("assets/picture/bicon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 240,
-          topF: 220,
+          topT: 220,
+          topF: 250,
           left: 150,
           icon: Icons.person,
+          img: ImageIcon( size:35,AssetImage("assets/picture/cicon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
@@ -116,20 +123,23 @@ class LoginSignupScreen extends StatelessWidget {
           topF: 300,
           left: 40,
           icon: Icons.mood,
+          img: ImageIcon( size:35,AssetImage("assets/picture/ficon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 250,
+          topT: 110,
           topF: 90,
           left: 110,
           icon: Icons.star,
+          img: ImageIcon( size:35,AssetImage("assets/picture/micon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 300,
+          topT: 280,
           topF: 550,
           left: 25,
           icon: Icons.ac_unit,
+          img: ImageIcon( size:35,AssetImage("assets/picture/ricon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
@@ -155,7 +165,7 @@ class LoginSignupScreen extends StatelessWidget {
         buildAnimatedIcon(
           move: loginSignupController.move,
           topT: 160,
-          topF: 120,
+          topF: 160,
           left: 30,
           icon: Icons.flight,
         ),
@@ -168,14 +178,14 @@ class LoginSignupScreen extends StatelessWidget {
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 300,
+          topT: 280,
           topF: 680,
           left: 290,
           icon: Icons.shopping_cart,
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 200,
+          topT: 180,
           topF: 590,
           left: 140,
           icon: Icons.home,
@@ -184,7 +194,7 @@ class LoginSignupScreen extends StatelessWidget {
           move: loginSignupController.move,
           topT: 80,
           topF: 150,
-          left: 130,
+          left: 140,
           icon: Icons.nature_people,
         ),
         buildAnimatedIcon(
@@ -209,6 +219,7 @@ class LoginSignupScreen extends StatelessWidget {
           topF: 580,
           left: Get.width-10-60,
           icon: Icons.emoji_emotions,
+          img: ImageIcon( size:35,AssetImage("assets/picture/bicon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
@@ -216,6 +227,7 @@ class LoginSignupScreen extends StatelessWidget {
           topF: 450,
           left: Get.width-10-130,
           icon: Icons.person,
+          img: ImageIcon( size:35,AssetImage("assets/picture/cicon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
@@ -223,10 +235,11 @@ class LoginSignupScreen extends StatelessWidget {
           topF: 470,
           left: Get.width-10-70,
           icon: Icons.mood,
+          img: ImageIcon( size:35,AssetImage("assets/picture/ficon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 150,
+          topT: 140,
           topF: 40,
           left: Get.width-10-10,
           icon: Icons.pets,
@@ -235,15 +248,17 @@ class LoginSignupScreen extends StatelessWidget {
           move: loginSignupController.move,
           topT: 120,
           topF: 380,
-          left: Get.width-10-90,
+          left: Get.width-80,
           icon: Icons.emoji_emotions,
+          img: ImageIcon( size:35,AssetImage("assets/picture/bicon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 280,
+          topT: 220,
           topF: 220,
           left: Get.width-10-150,
           icon: Icons.person,
+          img: ImageIcon( size:35,AssetImage("assets/picture/cicon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
@@ -251,20 +266,25 @@ class LoginSignupScreen extends StatelessWidget {
           topF: 300,
           left: Get.width-10-40,
           icon: Icons.mood,
+          img: ImageIcon( size:35,AssetImage("assets/picture/ficon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 250,
+          topT: 100,
           topF: 100,
           left: Get.width-10-110,
           icon: Icons.star,
+          img: ImageIcon( size:35,
+              
+              AssetImage("assets/picture/micon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
-          topT: 230,
+          topT: 180,
           topF: 570,
-          left: Get.width-10-155,
+          left: Get.width-195,
           icon: Icons.ac_unit,
+          img: ImageIcon( size:35,AssetImage("assets/picture/ricon.png")),
         ),
         buildAnimatedIcon(
           move: loginSignupController.move,
@@ -329,6 +349,21 @@ class LoginSignupScreen extends StatelessWidget {
           left: Get.width-10-50,
           icon: Icons.directions_bike,
         ),
+        buildAnimatedIcon(
+          move: loginSignupController.move,
+          topT: 50,
+          topF: 430,
+          left: Get.width-200,
+          icon: Icons.wb_sunny,
+        ),
+        buildAnimatedIcon(
+          move: loginSignupController.move,
+          topT: 260,
+          topF: 430,
+          left: Get.width-200,
+          icon: Icons.wb_sunny,
+          img: ImageIcon( size:35,AssetImage("assets/picture/ficon.png")),
+        ),
       ]),
     );
   }
@@ -339,13 +374,14 @@ class LoginSignupScreen extends StatelessWidget {
     required double topF,
     required double left,
     required IconData icon,
+     ImageIcon? img
   }) {
     return Obx(
       () => AnimatedPositioned(
         top: move.value ? topT : topF,
         left: left,
         duration: const Duration(seconds: 1),
-        child: Icon(icon),
+        child: img??Icon(icon),
       ),
     );
   }

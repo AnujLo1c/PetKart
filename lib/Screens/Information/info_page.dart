@@ -47,6 +47,7 @@ class PetCategoryTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 12),
         decoration: BoxDecoration(
+
           border: Border.all(color: Colors.pink.shade200),
           borderRadius: BorderRadius.circular(15),
         ),
@@ -87,6 +88,8 @@ class PetCategoryTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 25),
         decoration: BoxDecoration(
           color: Colors.white,
+            image: DecorationImage(image: AssetImage(imageUrl),fit: BoxFit.cover),
+
             border: Border.all(color: Get.theme.colorScheme.primary),
             borderRadius: BorderRadius.circular(10)),
       ),

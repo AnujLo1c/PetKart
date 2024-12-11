@@ -5,27 +5,27 @@ class InfoPageController extends GetxController{
     PetCategory(
       title: 'Dog',
       description: 'Everything You Need to Know About Dogs, Right at Your Fingertips.',
-      imageUrl: 'assets/images/dog.png',
+      imageUrl: 'assets/picture/puppy.png',
     ),
     PetCategory(
       title: 'Cat',
       description: 'Unlock the Secrets to a Happy Cat – Tips and Fun Facts!',
-      imageUrl: 'assets/images/cat.png',
+      imageUrl: 'assets/picture/cat.png',
     ),
     PetCategory(
       title: 'Fish',
       description: 'Swimmingly Good Advice – Everything You Need to Know About Fish Care.',
-      imageUrl: 'assets/images/fish.png',
+      imageUrl: 'assets/picture/fish.png',
     ),
     PetCategory(
       title: 'Small Mammals',
       description: 'Big Love for Little Pets – Your Guide to Small Mammal Care!',
-      imageUrl: 'assets/images/small_mammals.png',
+      imageUrl: 'assets/picture/mammal.png',
     ),
     PetCategory(
       title: 'Birds',
       description: 'Take Flight with the Best Bird Care Tips – From Parrots to Parakeets!',
-      imageUrl: 'assets/images/birds.png',
+      imageUrl: 'assets/picture/birds.png',
     ),
   ];
 

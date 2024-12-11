@@ -15,6 +15,7 @@ class CommunityPageController extends GetxController {
   TextEditingController postController = TextEditingController();
   Rx<bool> onMyFeed = true.obs;
   RxString communityName=''.obs ;
+
 PersistentDataController persistentDataController=Get.find<PersistentDataController>();
   postingToggle() {
     postBoxBool.value = !postBoxBool.value;

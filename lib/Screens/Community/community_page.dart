@@ -89,7 +89,9 @@ class CommunityPage extends StatelessWidget {
                 child: CachedNetworkImage(
                   //TODO:user url
                   imageUrl: "https://example.com/path/to/your/image.jpg", 
-                  placeholder: (context, url) => const CircularProgressIndicator(), 
+                  placeholder: (context, url) => const SizedBox(
+
+                      child: Icon(Icons.person,size: 25,)),
                   errorWidget: (context, url, error) => const SizedBox(
 
                       child: Icon(Icons.person,size: 25,)),
@@ -104,6 +106,7 @@ class CommunityPage extends StatelessWidget {
               communityPageController.postBoxBool.value
                   ? SizedBox(
                       height: 40,
+                      width: Get.width-100,
                       child: Row(
                         children: [
                            Text(
@@ -114,8 +117,8 @@ class CommunityPage extends StatelessWidget {
                               color: Colors.black, // Set text color
                             ),
                           ),
-                          Gap(Get.width -170),
-                          IconButton(
+                          // Gap(Get.width -260),
+Spacer(),                          IconButton(
                             icon: const Icon(Icons.close, color: Colors.black),
                             onPressed: () {
                               communityPageController.postingToggle();
@@ -216,8 +219,20 @@ class CommunityPage extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(20)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(post.community),
+          Row(
+            children: [
+              Gap(10),
+              Text( "posted on ",style: TextStyle(fontSize: 12),),
+             GestureDetector(
+                 onTap: () {
+
+                 },
+                 child: Text(post.community,style: TextStyle(color: Get.theme.colorScheme.primary),))
+            ],
+          ),
+
           Divider(
             color: Get.theme.colorScheme.primary,
             thickness: 2,
@@ -231,7 +246,8 @@ class CommunityPage extends StatelessWidget {
           child: CachedNetworkImage(
             //TODO:user url
             imageUrl: "https://example.com/path/to/your/image.jpg",
-            placeholder: (context, url) => const CircularProgressIndicator(),
+            placeholder: (context, url) => const SizedBox(
+                child: Icon(Icons.person,size: 25,)),
             errorWidget: (context, url, error) => const SizedBox(
                 child: Icon(Icons.person,size: 25,)),
             imageBuilder: (context, imageProvider) => CircleAvatar(
@@ -273,17 +289,17 @@ class CommunityPage extends StatelessWidget {
             ],
           ),
           const Gap(6),
-           Padding(
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-            post.content,
+              post.content,
               overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
-              
               maxLines: 9,
               softWrap: false,
+              textAlign: TextAlign.left, // Ensures text is aligned to the left
             ),
           )
+
         ],
       ),
     );
@@ -303,31 +319,32 @@ class CommunityPage extends StatelessWidget {
             endIndent: 40,
           ),
           StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection("users").doc(EmailPassLoginAl().getEmail())
-                .collection('feed') // Change this to your posts collection path
-                .orderBy('date', descending: true)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                return const Center(child: Text("No posts available"));
-              }
+              stream: FirebaseFirestore.instance.collection("users").doc(EmailPassLoginAl().getEmail())
+                  .collection('feed') // Change this to your posts collection path
+                  .orderBy('date', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return const Center(child: Text("No posts available"));
+                }
 
-              // Map the documents to a list of PostWidgets
-              List<Widget> postWidgets = snapshot.data!.docs.map((doc) {
-                var data = doc.data() as Map<String, dynamic>;
-                var post = PostModel.fromMap(data); // Assuming you have a `fromMap` constructor in PostModel
-                print(1);
-                return postWidget(post, communityPageController); // Pass the post to postWidget
-              }).toList();
+                // Map the documents to a list of PostWidgets
+                List<Widget> postWidgets = snapshot.data!.docs.map((doc) {
+                  var data = doc.data() as Map<String, dynamic>;
+                  var post = PostModel.fromMap(data);
 
-              return Column(
-                children: postWidgets,
-              );
-            },
-          ),
+                  return postWidget(post, communityPageController); // Pass the post to postWidget
+                }).toList();
+
+                return Column(
+                  children: postWidgets,
+                );
+              },
+            ),
+
         ],
       ),
     );

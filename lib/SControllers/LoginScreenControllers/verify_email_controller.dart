@@ -31,15 +31,17 @@ class VerifyEmailController extends GetxController {
       isEmailVerified.value = fa.currentUser!.emailVerified;
 
       if (isEmailVerified.value) {
+
         Get.snackbar("Success", "Email Successfully Verified",
             snackPosition: SnackPosition.BOTTOM);
-
-        Get.until((route) => route.settings.name == "/login_signup_screen");
+Get.offNamed('/intro');
+        // Get.until((route) => route.settings.name == "/login_signup_screen");
 
         timer?.cancel();
       }
     }
   }
+
 
   void cancelOp() {
     try {
@@ -54,8 +56,10 @@ class VerifyEmailController extends GetxController {
   void resendEmail() {
     try {
       fa.currentUser?.sendEmailVerification();
+      Get.snackbar("Mail Sent", "Check your inbox",backgroundColor: Get.theme.colorScheme.primary);
     } catch (e) {
       debugPrint('$e');
+      Get.snackbar("To many attempts", "Please try later.",backgroundColor: Get.theme.colorScheme.primary);
     }
   }
 }

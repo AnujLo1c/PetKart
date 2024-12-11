@@ -25,15 +25,15 @@ class AdoptionFormScreen extends StatelessWidget {
               buildTextField(' Full Name', controller.fullNameController),
               buildTextField(' Address', controller.addressController),
               buildTextField(' Contact No', controller.contactNoController),
-              buildTextField(' Email', controller.emailController),
-              const Gap( 8),
+              // buildTextField(' Email', controller.emailController),
+              // const Gap( 5),
               const Text(' House Type', style: TextStyle(fontWeight: FontWeight.bold)),
               buildRadioListTile('Rent', 'Own', controller.houseType),
               buildTextField(' Members', controller.membersController),
-              const Gap( 16),
+              const Gap( 5),
               const Text(' Have you owned a pet before?', style: TextStyle(fontWeight: FontWeight.bold)),
               buildYesNoRadio(controller.ownedPetBefore),
-              const Gap( 16),
+              const Gap( 5),
               const Text(' Do you currently have a pet?', style: TextStyle(fontWeight: FontWeight.bold)),
               buildYesNoRadio(controller.currentlyHavePet),
               buildTextField(' Reason of Adoption', controller.reasonForAdoptionController),
@@ -44,7 +44,7 @@ class AdoptionFormScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min, // Reduces space between children
                 children: [
                   Obx(() => Checkbox(
-                    visualDensity: VisualDensity(vertical: -4, horizontal: -4), // Adjust horizontal as well
+                    visualDensity: const VisualDensity(vertical: -4, horizontal: -4),
                     value: controller.termsAccepted.value,
                     onChanged: (value) {
                       controller.termsAccepted.value = value!;
@@ -62,13 +62,14 @@ class AdoptionFormScreen extends StatelessWidget {
 
               Center(
                 child: ElevatedButton(
-                  onPressed: controller.submitForm,
+                  onPressed: ()=>controller.submitForm(),
                   style: ElevatedButton.styleFrom(
            minimumSize: Size(Get.width-20, 50)
                   ),
                   child: const Text('Request'),
                 ),
               ),
+              Gap(20)
             ],
           ),
         ),

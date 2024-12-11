@@ -23,7 +23,7 @@ class EmailPassLoginAl {
         Get.toNamed("/emailverify");
       }
       // print("!_auth.currentUser!.emailVerified ${!_auth.currentUser!.emailVerified}");
-      showSuccessSnackbar("Login successful.");
+      // showSuccessSnackbar("Login successful.");
 
       return true;
     } on FirebaseAuthException catch (e) {
@@ -40,7 +40,23 @@ class EmailPassLoginAl {
       return false;
     }
   }
+  Future<bool> isEmailVerified() async {
+    try {
+      User? user = _auth.currentUser;
 
+      if (user != null) {
+        await user.reload(); // Reload user to ensure the latest information
+        user = FirebaseAuth.instance.currentUser;
+
+        return user!.emailVerified; // Returns true if verified, false otherwise
+      } else {
+        return false; // No user is signed in, thus not verified
+      }
+    } catch (e) {
+      print("Error checking email verification: $e");
+      return false; // In case of any error, treat as not verified
+    }
+  }
   signUpAL( String email, String password) async {
     try {
       if (!validateEmailAL(email)) {

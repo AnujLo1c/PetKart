@@ -61,17 +61,21 @@ class IntroScreen extends StatelessWidget {
         onDonePress: () => introScreenController.onDonePressed(),
         listContentConfig:const [
           ContentConfig(
-            title: "Welcome to MyApp",
+marginTitle: EdgeInsets.only(top: 100),
+// widgetTitle: Image(image: AssetImage('assets/picture/intro1.png')),
+            pathImage: 'assets/picture/intro1.png',
+            title: "Welcome to PetKart",
+
             styleTitle: TextStyle(
-              color: Colors.deepOrange,
-              fontSize: 30.0,
+
+              fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
-            description: "An app that makes your life easier and more fun.",
+            description: "Where Happy Pets Find Everything They Need!",
             styleDescription: TextStyle(
 
-              color: Colors.deepOrange,
-              fontSize: 20.0,
+              // color: Colors.deepOrange,
+              fontSize: 18.0,
             ),
 
             // pathImage: "assets/image1.png",
@@ -79,31 +83,34 @@ class IntroScreen extends StatelessWidget {
 
           ),
           ContentConfig(
-            title: "Track Your Activities",
+            title: "Connect & Shop",
+            pathImage: 'assets/picture/intro2.png',
+            marginTitle: EdgeInsets.only(top: 100),
             styleTitle: TextStyle(
-              color: Colors.blueAccent,
-              fontSize: 30.0,
+              // color: Colors.blueAccent,
+              fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
-            description: "Monitor your daily activities and stay on top of your goals.",
+            description: "Connect,Shop,and CareFor Your Pet-All in One Place!",
             styleDescription: TextStyle(
-              color: Colors.blueAccent,
-              fontSize: 20.0,
+              // color: Colors.blueAccent,
+              fontSize: 18.0,
             ),
             // pathImage: "assets/image2.png",
             backgroundColor: Colors.white,
           ),
           ContentConfig(
-            title: "Stay Connected",
+            title: "Community & Information",
+            marginTitle: EdgeInsets.only(top: 100),
             styleTitle: TextStyle(
-              color: Colors.purple,
-              fontSize: 30.0,
+              // color: Colors.purple,
+              fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
-            description: "Stay in touch with your friends and family, anytime, anywhere.",
+            description: "Connect, Learn, and Grow Together—Your Trusted Pet Community Hub.",
             styleDescription: TextStyle(
-              color: Colors.purple,
-              fontSize: 20.0,
+              // color: Colors.purple,
+              fontSize: 18.0,
             ),
             // pathImage: "assets/image3.png",
             backgroundColor: Colors.white,

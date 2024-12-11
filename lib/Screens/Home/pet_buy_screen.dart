@@ -1,28 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gap/gap.dart';
-
 import '../../SControllers/HomeController/pet_buy_controller.dart';
-
+import '../../models/cart_animal_item.dart'; // Import the CartAnimalItem model
 
 class PetBuyScreen extends StatelessWidget {
   const PetBuyScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-  final PetBuyController petBuyController = Get.put(PetBuyController());
+    final PetBuyController petBuyController = Get.put(PetBuyController());
+    final Color primary = Get.theme.colorScheme.primary;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Get.arguments),
-        backgroundColor: Colors.pinkAccent,
-
+        actions: [IconButton(onPressed: (){
+          Get.toNamed('/cart_animal_screen');
+        }, icon: Icon(Icons.shopping_cart))],
+        backgroundColor: primary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-
             Row(
               children: [
                 Expanded(
@@ -48,25 +50,48 @@ class PetBuyScreen extends StatelessWidget {
                 const Gap(10),
               ],
             ),
-            const Gap(10),
-
+            const Gap(20),
             Expanded(
-              child: Obx(() {
-                return ListView.separated(
-                  itemCount: petBuyController.dogsList.length,
-                  separatorBuilder: (context, index) => const Gap(10),
-                  itemBuilder: (context, index) {
-                    return DogTile(
-                      name: petBuyController.dogsList[index]['name'] ?? 'Unknown', // Provide a default value
-                      gender: petBuyController.dogsList[index]['gender'] ?? 'Unknown',
-                      age: petBuyController.dogsList[index]['age'] ?? 'Unknown',
-                      location: petBuyController.dogsList[index]['location'] ?? 'Unknown',
-                      price: petBuyController.dogsList[index]['price'] ?? '0',  // Default price as '0'
-                      imageUrl: petBuyController.dogsList[index]['image'] ?? 'assets/picture/puppy.png', // Default image
-                    );
-                  },
-                );
-              }),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: petBuyController.getPetsStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return const Center(child: Text("Error loading data"));
+                  }
+
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(child: Text("No pets available"));
+                  }
+
+                  final pets = snapshot.data!.docs;
+
+                  return ListView.separated(
+                    itemCount: pets.length,
+                    separatorBuilder: (context, index) => const Gap(10),
+                    itemBuilder: (context, index) {
+                      final doc = pets[index];
+                      final petData = doc.data() as Map<String, dynamic>;
+
+                      // Convert to CartAnimalItem
+                      final cartAnimal = CartAnimalItem.fromMap(doc.id, petData);
+
+                      return GestureDetector(
+                        onTap: (){
+                          Get.toNamed('/pet_display_screen',arguments: [doc.id,Get.arguments]);
+                        },
+                        child: DogTile(
+                          cartAnimal: cartAnimal,
+                          primary: primary,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -75,61 +100,51 @@ class PetBuyScreen extends StatelessWidget {
   }
 }
 
-// Widget for Dog Tile
+// Updated DogTile widget to use CartAnimalItem
 class DogTile extends StatelessWidget {
-  final String name;
-  final String gender;
-  final String age;
-  final String location;
-  final String price;
-  final String imageUrl;
+  final CartAnimalItem cartAnimal;
+  final Color primary;
 
   const DogTile({
-    Key? key,
-    required this.name,
-    required this.gender,
-    required this.age,
-    required this.location,
-    required this.price,
-    required this.imageUrl,
-  }) : super(key: key);
+    super.key,
+    required this.cartAnimal,
+    required this.primary,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.pinkAccent),
+        border: Border.all(color: primary),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         children: [
-
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.asset(
-              imageUrl,
-              height: 80,
-              width: 80,
+            child: Image(
+              image: NetworkImage(cartAnimal.imageUrl),
+              height: 90,
+              width: 90,
               fit: BoxFit.cover,
             ),
           ),
           const Gap(10),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text(cartAnimal.name, style: const TextStyle(fontWeight: FontWeight.bold)),
                 Row(
                   children: [
-                    TagWidget(text: gender, color: Colors.pink),
+                    TagWidget(text: cartAnimal.gender, color: primary),
                     const Gap(5),
-                    TagWidget(text: age, color: Colors.pink[200]!),
+                    TagWidget(text: cartAnimal.age, color: primary),
                   ],
                 ),
-                Text(location, style: const TextStyle(color: Colors.grey)),
-                Text("Rs.$price", style: const TextStyle(color: Colors.black)),
+                Text(cartAnimal.location, style: const TextStyle(color: Colors.grey)),
+                Text("Rs.${cartAnimal.price}", style: const TextStyle(color: Colors.black)),
               ],
             ),
           ),
@@ -138,7 +153,6 @@ class DogTile extends StatelessWidget {
     );
   }
 }
-
 
 class TagWidget extends StatelessWidget {
   final String text;

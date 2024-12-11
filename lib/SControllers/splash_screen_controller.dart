@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:flutter/animation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -11,7 +9,8 @@ class SplashScreenController extends GetxController  {
   void onInit() {
     super.onInit();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Timer(const Duration(milliseconds: 4300), () => Get.offNamed("/login"),);
+    // Timer(const Duration(milliseconds: 4300), () => Get.offNamed("/login_signup_screen"),);
+    Timer(const Duration(milliseconds: 4300), () => Get.offNamed("/auth"),);
   }
   var animation=["assets/lotti/splash0.json"];
   // int random=Random().nextInt(1);

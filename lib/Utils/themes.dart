@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 import 'color_scheme.dart';
 
@@ -15,6 +14,9 @@ class MyAppTheme {
     return ThemeData(
       colorScheme: colorScheme,
       focusColor: focusColor,
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor:colorScheme.primary
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,
@@ -29,8 +31,6 @@ class MyAppTheme {
           fontSize: 20,
         ),
       ),
-
-
       elevatedButtonTheme: ElevatedButtonThemeData(
 
         style: ElevatedButton.styleFrom(

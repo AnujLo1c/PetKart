@@ -15,15 +15,16 @@ const ColorScheme lightColorScheme = ColorScheme(
 );
 
 const  ColorScheme darkColorScheme = ColorScheme(
-  primary: Color(0xFFFF8000),
-  secondary: Color(0xFF4D1F7C),
+  primary: Color(0xFFBB86FC),
+  secondary: Color(0xFFD7BEF6),
   surface: Color(0xFF1F1929),
   error: Colors.redAccent,
   onError: Colors.white,
-  onPrimary: Colors.white,
+  onPrimary: Colors.black,
   onSecondary: Colors.white,
   onSurface: Colors.white,
   brightness: Brightness.dark,
-  shadow: Colors.black12,
+  shadow:  Colors.black12,
+  // shadow: Color(0xFFEAC8CA),
   outline: Colors.white
 );

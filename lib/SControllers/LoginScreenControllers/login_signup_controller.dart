@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_kart/Firebase/FirebaseAuth/google_sign_in.dart';
+import 'package:pet_kart/MyWidgets/loading_dialog.dart';
 import 'package:pet_kart/SControllers/persistent_data_controller.dart';
 
 import '../../Firebase/FirebaseAuth/email_pass_login.dart';
@@ -28,7 +29,7 @@ class SignInController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final GlobalKey<FormState> formKeylogin = GlobalKey<FormState>();
-  PersistentDataController persistentDataController=Get.put(PersistentDataController());
+  PersistentDataController persistentDataController=Get.find<PersistentDataController>();
   void togglePasswordVisibility() {
     isObscure.value = !isObscure.value;
   }
@@ -36,27 +37,45 @@ class SignInController extends GetxController {
     emailController.clear();
     passwordController.clear();
   }
-  loginUser() async {
+  void loginUser() async {
     if (formKeylogin.currentState!.validate()) {
       final email = emailController.text.trim();
       final password = passwordController.text.trim();
-      if (await EmailPassLoginAl().loginInAL(email, password)) {
-        storeUserName(email);
+      showLoadingDialog(message: "Logging in...");
 
-        Get.toNamed("/home");
-      } else {
-        showErrorSnackbar("login Failed");
+      try {
+        if (await EmailPassLoginAl().loginInAL(email, password)) {
+          storeUserName(email);
+
+          bool isVerified = await EmailPassLoginAl().isEmailVerified();
+          hideLoadingDialog(); // Hide the dialog before navigating.
+
+          if (isVerified) {
+            Get.toNamed("/home");
+          } else {
+            Get.toNamed('/emailverify');
+          }
+        } else {
+          hideLoadingDialog();
+          showErrorSnackbar("Login Failed");
+        }
+      } catch (e) {
+        hideLoadingDialog();
+        showErrorSnackbar("An error occurred: $e");
       }
     }
   }
+
 googleLogin() async {
+    showLoadingDialog();
   clearText();
   UserCredential? uc=await GoogleSignInAL().signInGoogle();
+  hideLoadingDialog();
   if(uc==null){
     showErrorSnackbar("Some Error");
   }
   else if(uc.additionalUserInfo!.isNewUser){
-  Customer user=Customer(customerName: "xyz", email: uc!.user!.email??"", phoneNo: "XXXXXXXXXX");
+  Customer user=Customer(customerName: "xyz", email: uc.user!.email??"", phoneNo: "XXXXXXXXXX");
   FirestoreFirebaseAL().uploadUserDataAL(user);
     Get.toNamed("/googlesignup");
   }else{
@@ -93,9 +112,9 @@ class SignUpController extends GetxController {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>(debugLabel: "signup");
-
+  // PersistentDataController persistentDataController=Get.put(PersistentDataController());
   var obscurePassword = true.obs;
-  PersistentDataController persistentDataController=Get.put(PersistentDataController());
+  PersistentDataController persistentDataController=Get.find<PersistentDataController>();
 
 
 
@@ -115,12 +134,14 @@ class SignUpController extends GetxController {
   void signUpUser() async {
     // if (formKey.currentState?.validate() ?? false) {
 //TODO:account existance check
+  showLoadingDialog();
       if (await EmailPassLoginAl()
           .signUpAL( emailController.text, passwordController.text)) {
 
           Customer signupUser=Customer(customerName: nameController.text, email: emailController.text,  phoneNo: phoneController.text);
           bool userDataUploadStatus =
           await FirestoreFirebaseAL().uploadUserDataAL(signupUser);
+          hideLoadingDialog();
           if (userDataUploadStatus) {
             storeUserName(emailController.text);
             Get.toNamed("/emailverify");
@@ -132,7 +153,7 @@ class SignUpController extends GetxController {
           }
         // }
       } else {
-
+hideLoadingDialog();
         print("user failed to upload signup firebase auth");
       }
 

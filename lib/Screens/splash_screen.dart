@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -27,8 +26,8 @@ class SplashScreen extends StatelessWidget {
             ),
             ShaderMask(
               shaderCallback: (Rect bounds) {
-                return const LinearGradient(
-                  colors: <Color>[Colors.blue, Colors.lightBlueAccent],
+                return LinearGradient(
+                  colors: <Color>[Get.theme.colorScheme.primary, Get.theme.colorScheme.primary.withOpacity(0.7)],
                   tileMode: TileMode.mirror,
                 ).createShader(bounds);
               },

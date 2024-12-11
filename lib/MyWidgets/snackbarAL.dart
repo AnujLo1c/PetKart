@@ -18,5 +18,6 @@ void showErrorSnackbar(String errorMessage) {
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: Colors.red,
     colorText: Colors.white,
+    margin: EdgeInsets.only(bottom: 100)
   );
 }

@@ -18,10 +18,7 @@ class ThemeController extends GetxController {
     themeMode.value = themeMode.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     Get.changeThemeMode(themeMode.value);
     print('Theme changed to: ${themeMode.value}');
-    // Get.forceAppUpdate();
-    // Get.reload<BottomNavController>();
   }
-
 
   ThemeData get lightTheme => MyAppTheme.lightTheme;
   ThemeData get darkTheme => MyAppTheme.darkTheme;

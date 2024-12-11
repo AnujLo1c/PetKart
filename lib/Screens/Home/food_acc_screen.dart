@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -8,15 +9,16 @@ class FoodAccScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FoodAccController foodAccController = Get.put(FoodAccController());
+    final FoodAccController foodAccController = Get.put(FoodAccController());
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(Get.arguments),
+        title: Text(foodAccController.title),
         backgroundColor: Get.theme.colorScheme.primary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: SingleChildScrollView(  
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Row(
@@ -36,42 +38,70 @@ class FoodAccScreen extends StatelessWidget {
               ),
               const Gap(20),
               SizedBox(
-                height: 105,
+                height: 70,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   separatorBuilder: (context, index) => const Gap(20),
-                  itemCount: 4,
+                  itemCount: foodAccController.categories.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      width: 100,
+                      width: 80,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(13),
                       ),
-                      child: Column(
+                      child:
+                      Column(
                         children: [
                           const Gap(5),
-                          const Image(
-                            image: AssetImage("assets/picture/puppy.png"),
+                           Image(
+                            image: AssetImage("assets/picture/${foodAccController.categoriesImgs[index]}"),
+                             height: 40,
+                             width: 50,
                           ),
-                          Text(foodAccController.categories[index]),
+                          Text(foodAccController.categories[index],style: TextStyle(fontSize: 12),),
                         ],
                       ),
                     );
                   },
                 ),
               ),
-              const Gap(10),
-              Obx(() => ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,  // Add shrinkWrap to fit within SingleChildScrollView
-                itemBuilder: (context, index) => ProductTile(
-                  index: index,
-                  foodAccController: foodAccController,
+              const Gap(20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: foodAccController.getProductStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (snapshot.hasError) {
+                      return const Center(child: Text("Error loading products"));
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Center(child: Text("No products available"));
+                    }
+
+                    final products = snapshot.data!.docs;
+
+                    return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true, // Fit within SingleChildScrollView
+                      itemBuilder: (context, index) {
+                        final product = products[index].data() as Map<String, dynamic>;
+
+                        return ProductTile(
+                          product: product,
+                        );
+                      },
+                      separatorBuilder: (context, index) => const Gap(12),
+                      itemCount: products.length,
+                    );
+                  },
                 ),
-                separatorBuilder: (context, index) => const Gap(12),
-                itemCount: foodAccController.itemCount.value,
-              )),
+              ),
             ],
           ),
         ),
@@ -81,41 +111,45 @@ class FoodAccScreen extends StatelessWidget {
 }
 
 class ProductTile extends StatelessWidget {
-  final int index;
-  final FoodAccController foodAccController;
-  const ProductTile({super.key, required this.index, required this.foodAccController});
+  final Map<String, dynamic> product;
+
+  const ProductTile({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Get.theme.colorScheme.primary),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 100,
-            height: 90,
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            decoration: BoxDecoration(
-              border: Border.all(color: Get.theme.colorScheme.primary),
-              borderRadius: BorderRadius.circular(20),
-              image: const DecorationImage(
-                image: AssetImage("assets/picture/petFood.png"),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Get.theme.colorScheme.primary),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 100,
+              height: 90,
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              decoration: BoxDecoration(
+                border: Border.all(color: Get.theme.colorScheme.primary),
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: NetworkImage(product['primaryImageUrl'] ?? 'assets/picture/petFood.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Food"),
-              Text("Weight/Size: 500gr"),
-              Text("Rating: 4.5"),
-              Text("Price: 4000"),
-            ],
-          ),
-        ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(product['name'] ?? 'Unknown',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                Text("Weight: ${product['weight'] ?? 'N/A'}",style: TextStyle(fontSize: 12),),
+                Text("Rating: ${product['rating'] ?? '0.0'}",style: TextStyle(fontSize: 12),),
+                Text("Price: Rs.${product['price'] ?? 'N/A'}",style: TextStyle(fontSize: 12),),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

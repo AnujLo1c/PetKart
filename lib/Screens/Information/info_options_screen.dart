@@ -12,20 +12,39 @@ class InfoOptionsScreen extends StatelessWidget {
     InfoOptionsController infoOptionsController=Get.put(InfoOptionsController());
     return Scaffold(
       appBar:  AppBar(
-        title: Text(Get.arguments),
+        title: Text(infoOptionsController.title),
         centerTitle: true,
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(10),
 
-        itemBuilder: (context, index) => InfoTile(infoOptionsController.list[index]),itemCount: infoOptionsController.list.length,),
+        itemBuilder: (context, index) => InfoTile(infoOptionsController.list[index],infoOptionsController.title),itemCount: infoOptionsController.list.length,),
     );
   }
 
-  InfoTile(String text) {
+  InfoTile(String text,String title) {
     return GestureDetector(
       onTap: (){
         //TODO: nav to info
+        if(title=='Dog') {
+          Get.toNamed("/dog_detail_screen",arguments: text.toLowerCase().replaceAll(' ', '_'));
+        }
+        else if(title=='Cat'){
+          // print("object");
+          Get.toNamed("/animal_detail_screen",arguments: [text.toLowerCase().replaceAll(' ', '_'),'cat_info']);
+        }
+        else if(title=='Fish'){
+          // print("object");
+          Get.toNamed("/animal_detail_screen",arguments: [text.toLowerCase().replaceAll(' ', '_'),'fish_info']);
+        }
+        else if(title=='Small Mammals'){
+          // print("object");
+          Get.toNamed("/animal_detail_screen",arguments: [text.toLowerCase().replaceAll(' ', '_'),'rabbits_info']);
+        }
+        else if(title=='Birds'){
+          // print("object");
+          Get.toNamed("/animal_detail_screen",arguments: [text.toLowerCase().replaceAll(' ', '_'),'birds_info']);
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),

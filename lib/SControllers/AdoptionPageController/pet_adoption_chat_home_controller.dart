@@ -28,52 +28,13 @@ class PetAdoptionChatHomeController extends GetxController {
     }
   }
 
-  Future<void> addChatRoom(String user2) async {
-    print("Creating chat room with user: $user2");
-    // String check = await FirestoreFirebaseAL().checkUserExists(user2);
-    // if (check.isNotEmpty) {
-    //   String? user1 = EmailPassLoginAl().authUser.currentUser?.email;
-    //   if (user1 != null && user1.isNotEmpty) {
-    //     String user1NickName = await FirestoreFirebaseAL().checkUserExists(user1);
-    //
-    //     Chatroom c = Chatroom(
-    //       roomName: chatRoomName(user1, user2),
-    //       displayName: '$check#$user1NickName',
-    //       lastMsg: "",
-    //       participants: [user1, user2],
-    //       dateTime: DateFormat('dd MMM').format(DateTime.now()),
-    //     );
-    //
-    //     await FirestoreFirebaseAL().createChatRoom(c, user1, user2);
-    //   } else {
-    //     showErrorSnackbar("Some error occurred. Please re-login.");
-    //   }
-    // } else {
-    //   showErrorSnackbar("No user found");
-    // }
-  }
+
 
   String chatRoomName(String email1, String email2) {
     return (email1.compareTo(email2) > 0) ? email2 + email1 : email1 + email2;
   }
 
-  void showInputDialogChatRoom() {
-    TextEditingController textFieldController = TextEditingController();
-    Get.defaultDialog(
-      title: 'Enter your input',
-      content: TextField(
-        controller: textFieldController,
-        decoration: const InputDecoration(hintText: "Type something here"),
-      ),
-      textCancel: 'Cancel',
-      textConfirm: 'OK',
-      onCancel: () {},
-      onConfirm: () {
-        Get.back();
-        addChatRoom(textFieldController.text.trim());
-      },
-    );
-  }
+
 
   void setLen(int length) {
     len.value = length;

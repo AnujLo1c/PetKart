@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pet_kart/Models/community_model.dart';
 import 'package:pet_kart/Models/customer.dart';
 import 'package:pet_kart/MyWidgets/snackbarAL.dart';
@@ -8,6 +9,7 @@ class FirestoreFirebaseAL{
   uploadUserDataAL(Customer cu) async {
     try{
 await ff.collection("users").doc(cu.email).set(cu.toMap());
+await ff.collection("users").doc(cu.email).set({'verified':false});
       print("user profile data success");
     return true;
     }
